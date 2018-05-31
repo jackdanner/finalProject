@@ -1,81 +1,42 @@
-# finalProject
+# AgriViz - Illustrate the effects of fertilizer use on crop yield over a period of years
 
-# Project Title and purpose
-
-One Paragraph of project description goes here
+This project was to create a visualization of fertilizer usage in corn fields and the correlation with the yield per acre of corn planted. Phosphates, nitrogen and potash were the observed fertilizers in this project.
 
 ### Difficulties or opportunities you encountered along the way.
 
-The toughest part was...
+The toughest part was trying to come up with a way to illustrate the efficiency of the harvest. The amount planted and harvested increases as time progresses as trend for the set. To show the increase in efficiency, the data represented is a ratio of corn harvested(bushels) to the amount planted (acres).  It was done this way so that the yield is shown, not total amounts.
 
 ### Most interesting piece of your code and explanation for what it does.
 
 ```Java
-float margin = 75.0;
-float xInc;
-float yInc;
-float graphXZero;
-float graphYZero;
-float plotSize = 5;
-void drawVisual(){
-  graphXZero = margin;
-  graphYZero = (height-margin); 
-  drawAxis();
-  //determine positioning of points on graph
-  xInc = (width-(margin*2))/numYears;
-  float steps = (float)(getMaxDataValue()/10);
-  yInc = (height-(margin*2))/steps;
-  plot(yieldPerAcre,0,0,0);
-  plot(phosPerAcre,0,255,0);
-  plot(nitrogenPerAcre,255,0,0);
-  plot(potashPerAcre,0,0,255);
-  
-}
-
-void drawAxis(){
-  fill(0);
-  //y-axis
-  line(margin,margin,margin,height-margin);
-  //x-axis
-  line(margin,height-margin,width-margin,height-margin);
-}
-
-void drawLabels(){
-  
-}
-
-void drawKey(){
-  fill(255);
-  
-}
-
-void plot(ArrayList<Double> aL,int r, int g, int b){
-  noStroke();
-  fill(r,g,b);
-  ellipseMode(CENTER);
- float prevX = graphXZero;
- float prevY = graphYZero;
- float xCoord = graphXZero;
- for(int i=0;i<aL.size();i++){
-   if(aL.get(i)!=0){  
-   ellipse(xCoord,graphYZero-(((float)(double)aL.get(i)/10)*yInc),plotSize,plotSize);
-   }
-   xCoord+=xInc;
- }
-}
+//calculate potash used per acre in respective year, in lbs.
+  for(int i =0;i<cropPlanted.size();i++){
+    Double pot = (potashUsed.get(i)*20000);
+    Double acreage = (cropPlanted.get(i)*10000000);
+    if(pot==0){
+      potashPerAcre.add(new Double(0));
+    }else{
+    potashPerAcre.add(new Double(acreage/pot));
+  }
+  }
 ```
-This is the code that moves down the tree as decisions are made.  It gets each value from both left and right and also casts the value to a String.  If the progressions arrives at the leaf nodes, those values are printed.
+I think this is the most interesting piece of code. It produces the amount of fertilizer used per acre. The incoming data was in millions of acres and 1,000 short tons, so conversions were necessary to get the usage in lbs./acre, because that is the most logical unit of measure in this circumstance. 
+
 ## Built With
 
 * [Processing](https://processing.org/) - The IDE used
 
 ## Authors
 
-* **Billie Thompson** 
+Jack Danner
 
 
 ## Acknowledgments
+Data provided the United States Department of Agriculture division of the Economic Research Service. Raw data files are posted under the project’s “raw data” folder, with the original, unmodified files residing under the folder titled “original data”.
+Links to datasets:
+-https://www.ers.usda.gov/data-products/fertilizer-use-and-price.aspx
+-https://www.ers.usda.gov/data-products/feed-grains-database/feed-grains-yearbook-tables/
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+
+## Inspiration
+I find agriculture interesting, and was curious to see if fertilizer usage has anything to do with increase of efficiency in the field(no pun intended) of agriculture. The visualization shows that there is no correlation between the increase in yield and fertilizer used. Increased efficiencies come from somewhere else.s
